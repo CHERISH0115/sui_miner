@@ -75,7 +75,7 @@ async function retrievelAllPools() {
 // 0xdbf66a55c1c4054b4d2dda7f410a1aa875a9ae149643a15bd8863032bcc2395f
 
 
-const getPrice = async (sendAmount = 0.001) => {
+const getPrice = async (sendAmount = 0.00095) => {
 
     const pool = await mainnetSDK.Pool.getPool(
         "0xdbf66a55c1c4054b4d2dda7f410a1aa875a9ae149643a15bd8863032bcc2395f" // One of the pool from Cetus on Sui testnet
@@ -87,7 +87,7 @@ const getPrice = async (sendAmount = 0.001) => {
     // amount to be traded
     const amount = new BN(sendAmount * 10 ** 9);
     // slippage value
-    const slippage = Percentage.fromDecimal(d(2));
+    const slippage = Percentage.fromDecimal(d(1));
     // console.log(pool)
     const swapTicks = await mainnetSDK.Pool.fetchTicks({
         pool_id: pool.poolAddress,

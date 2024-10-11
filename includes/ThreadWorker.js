@@ -12,28 +12,33 @@ import {
 let askedToStop = false;
 const work = {
     async findSalt(firstHash, maxTarget, startNonce) {
+        startNonce = 2110374;
         const nonceBytes = u64toBytes(startNonce);
         const toHash2Length = firstHash.length + nonceBytes.length; // as nonce is u64
         const toHash2 = new Uint8Array(toHash2Length);
         toHash2.set(firstHash, 0);
         let i = 0;
 
-        do {
+        // do {
             incrementBytes(nonceBytes);
             toHash2.set(nonceBytes, firstHash.length);
             // const hash = BigInt('0x' + hasher.keccak256(toHash2));
-
             const bufferToHash = Buffer.from(toHash2);
+            
             const hashBuffer = keccak('keccak256').update(bufferToHash).digest();
             const hashHex = hashBuffer.toString('hex');
             const hash = BigInt('0x' + hashHex);
 
+            console.log('0x' + hashHex)
             if (hash <= maxTarget) {
+                console.log('0x' + hashHex)
+                // console.log(nonceBytes)
+                // console.log(startNonce + i)
                 return bytesTou64(nonceBytes);
             }
 
             i++;
-        } while (i < 100000);
+        // } while (i < 10000);
 
         return null;
     },

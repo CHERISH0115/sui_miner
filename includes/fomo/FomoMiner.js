@@ -2,6 +2,7 @@
 import suidouble from 'suidouble';
 import { bcs } from '@mysten/sui/bcs';
 import hasher from 'js-sha3';
+import axios from "axios";
 // import { spawn, Thread, Worker } from "threads";
 
 import { bytesTou64, bigIntTo32Bytes, u64toBytes } from '../math.js';
@@ -199,7 +200,23 @@ export default class FomoMiner {
         }, 3000);
 
         while (!foundValid && !isOutdated) {
-            nonce = await this._nonceFinder.findValidNonce(preparedHash, difficultyAsTarget);
+            // nonce = await this._nonceFinder.findValidNonce(preparedHash, difficultyAsTarget);
+            nonce = null
+            console.log(preparedHash)
+            try {
+
+                const firstHash = Buffer.from(preparedHash);
+                const firstHashHex = firstHash.toString('hex');
+                console.log(firstHashHex)
+                const response = await axios.post('http://localhost:8080/findSalt', {
+                    firstHash: firstHashHex // 替换为你的firstHash
+                });
+
+                console.log('Found nonce:', response.data);
+                nonce = response.data
+            } catch (error) {
+                console.error('Error finding nonce:', error);
+            }
 
             if (nonce !== null) {
 

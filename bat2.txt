@@ -1,0 +1,43 @@
+cd /home
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+nvm install 20.17.0
+
+
+yes "Y" | dnf install git
+
+
+cd /home
+
+git clone 克隆仓库假设文件夹名称sui_meta_miner
+
+cd /home/sui_meta_miner
+
+npm install pm2 -g
+
+
+npm install
+
+cd /home/sui_meta_miner
+
+
+
+// 赋予权限
+chmod +x ./main
+
+// 运行Go
+nohup ./main > /dev/null 2>&1 &
+
+
+//开启端口查看
+netstat -tuln
+// 查看有没有开启8080端口
+
+
+//有8080端口了在开启脚本
+pm2 start /home/sui_fomo/mine.js --name "sui-meta-miner" -i 1 -- --fomo --chain=mainnet --phrase=""
+

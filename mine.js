@@ -40,6 +40,9 @@ const run = async () => {
                 minerInstance.minPrice = parseFloat(minPrice);
             });
 
+            // minerInstance.minPrice = parseFloat(10099271179);
+
+            // minerInstance.minPrice = 10;
 
             // 获取当前的余额
             minerInstance._suiMaster._client.getBalance({

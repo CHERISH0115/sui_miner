@@ -4,7 +4,7 @@ import os from "os";
 export default class NonceFinder {
     constructor(params = {}) {
         this._workers = [];
-        this._noncesPerRun = 100000;
+        this._noncesPerRun = 10000;
         this._tryingNonces = [];
         this._initialNonce = 0;
         this._startedSearchAt = null;
@@ -53,7 +53,8 @@ export default class NonceFinder {
         await this.initWorkers();
         this._startedSearchAt = (new Date()).getTime();
         this._tryingNonces = [];
-        this._initialNonce = Math.floor(1199254740991 * Math.random());
+        // this._initialNonce = Math.floor(1199254740991 * Math.random());
+        this._initialNonce = 0;
 
         const promises = [];
 
@@ -86,7 +87,7 @@ export default class NonceFinder {
             } catch (e) {
                 foundGoodHash = false;
             }
-            console.log((this._name ? this._name : '') + ' | current rate is: ' + this.hashesPerSecond() + ' H/s');
+            // console.log((this._name ? this._name : '') + ' | current rate is: ' + this.hashesPerSecond() + ' H/s');
         } while (!foundGoodHash && !this._askedToStop);
 
         if (this._askedToStop) {  // we are stoping once
